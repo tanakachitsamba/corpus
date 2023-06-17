@@ -1,7 +1,15 @@
 import chromadb
 from chromadb.utils import embedding_functions
 from chromadb.config import Settings
-# Create a new Chroma client with persistence enabled. 
+from dotenv import load_dotenv
+import os
+
+# Load environmental variables from .env file
+load_dotenv()
+# Now you can access the environmental variables as regular Python variables
+api_key = os.getenv("OPENAI_KEY")
+
+
 persist_directory = "db"
 
 client = chromadb.Client(
@@ -23,7 +31,7 @@ collection_name = "peristed_collection"
 
 # Using OpenAI Embeddings. This assumes you have the openai package installed
 openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-    api_key="OPENAI_API_KEY", # Replace with your own OpenAI API key
+    api_key=api_key, # Replace with your own OpenAI API key
 )
 
 collection = client.create_collection(name=collection_name, embedding_function=openai_ef)
